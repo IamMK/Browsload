@@ -1,4 +1,10 @@
+import { createPinia } from "pinia";
 import { createApp } from "vue";
 import App from "./App.vue";
 
-createApp(App).mount("#app");
+import BaseDialog from "./components/UI/BaseDialog.vue";
+
+createApp(App)
+  .use(createPinia())
+  .component("base-dialog", BaseDialog)
+  .mount("#app");
