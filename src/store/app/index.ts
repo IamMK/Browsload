@@ -1,7 +1,7 @@
 export const appStore = {
   state: () => {
     return {
-      siteurl: "/order/",
+      siteUrl: "/orders/",
       orderNo: "",
       error: false,
       label: "order.zip",
