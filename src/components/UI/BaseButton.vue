@@ -1,30 +1,26 @@
+<script setup land="ts">
+import { defineProps, computed } from "vue";
+
+const props = defineProps({
+  type: { type: String, required: true },
+  parent: { type: String, required: true },
+  modificator: { type: String, required: false },
+});
+
+const buttonClass = computed(() => {
+  return `${props.parent}__${props.type}${
+    props.modificator
+      ? " " + props.parent + "__" + props.type + "--" + props.modificator
+      : ""
+  }`;
+});
+</script>
+
 <template>
   <button :class="buttonClass">
     <slot></slot>
   </button>
 </template>
-
-<script lang="ts">
-export default {
-  props: {
-    type: { type: String, required: true },
-    parent: { type: String, required: true },
-    modificator: { type: String, required: false },
-  },
-  computed: {
-    buttonClass(): string {
-      return (
-        this.parent +
-        "__" +
-        this.type +
-        (this.modificator
-          ? " " + this.parent + "__" + this.type + "--" + this.modificator
-          : "")
-      );
-    },
-  },
-};
-</script>
 
 <style lang="scss">
 .form {
