@@ -8,36 +8,37 @@
         v-model="appStore.orderNo"
         @click="clearErrors"
         @keyup="clearErrors"
-        @keyup.enter="
-          downloadItem({
-            url: appStore.siteUrl + appStore.orderNo + '.zip',
-            label: appStore.label,
-          })
-        "
+        @keyup.enter="downloadItem(appStore.url, appStore.label)"
       />
     </div>
-    <button
-      class="form__submit"
-      @click.prevent="
-        downloadItem({
-          url: appStore.siteUrl + appStore.orderNo + '.zip',
-          label: 'order.zip',
-        })
-      "
+    <base-button
+      type="submit"
+      parent="form"
+      @click.prevent="downloadItem(appStore.url, appStorelabel)"
     >
       Pobierz
-    </button>
+    </base-button>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useAppStore } from "@/store";
 
+import BaseButton from "@/components/UI/BaseButton.vue";
+
+interface Dupa extends EventTarget {
+  keyCode: number;
+  preventDefault(): boolean;
+}
+
 export default {
+  components: {
+    BaseButton,
+  },
   setup() {
     const appStore = useAppStore();
 
-    async function downloadItem({ url, label }) {
+    async function downloadItem(url: string, label: string) {
       const startTime = new Date().getTime();
 
       const request = new XMLHttpRequest();
@@ -90,22 +91,24 @@ export default {
     function clearErrors() {
       appStore.error = false;
     }
-
     return {
       appStore,
       downloadItem,
       clearErrors,
+      label: appStore.label,
     };
   },
   methods: {
-    isLetter(e) {
-      const keyCode = e.which;
+    isLetter(e: Dupa) {
+      console.log(e.keyCode);
+
+      const keyCode = e.keyCode;
 
       if (keyCode === 46) {
         return true;
       }
 
-      if ((keyCode !== 8 || keyCode === 32) && (keyCode < 48 || keyCode > 57)) {
+      if (keyCode !== 8 && (keyCode < 48 || keyCode > 57)) {
         e.preventDefault();
       }
     },
@@ -147,28 +150,6 @@ export default {
 
     &:focus:invalid + .form__label {
       visibility: visible;
-    }
-  }
-
-  &__submit {
-    background: #000;
-    border-radius: 9px;
-    text-decoration: none;
-
-    font-weight: bold;
-    font-size: 16px;
-    text-align: center;
-    border: solid #fff 1px;
-
-    color: #ffffff;
-    width: 250px;
-    padding: 1em;
-
-    transition: 0.3s;
-    &:hover {
-      border-color: initial;
-      cursor: pointer;
-      box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.5);
     }
   }
 }

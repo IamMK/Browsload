@@ -2,7 +2,7 @@
   <header class="header">
     <a href="/">
       <figure class="logo">
-        <img class="logo__image" src="../../assets/logo.png" alt="MK logo" />
+        <img class="logo__image" src="@/assets/logo.png" alt="MK logo" />
       </figure>
     </a>
   </header>

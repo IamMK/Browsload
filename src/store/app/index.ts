@@ -9,4 +9,9 @@ export const appStore = {
       progress: { percent: 0, speed: 0, remaining: { minutes: 0, seconds: 0 } },
     };
   },
+  getters: {
+    url: (state: { siteUrl: string; orderNo: string }) => {
+      return state.siteUrl + state.orderNo + ".zip";
+    },
+  },
 };

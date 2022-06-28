@@ -12,7 +12,7 @@
     <progress
       :value="appStore.progress.percent"
       max="100"
-      class="dialog_progressbar"
+      class="dialog__progressBar"
     ></progress>
   </base-dialog>
 </template>
@@ -29,3 +29,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.dialog__progressBar {
+  width: 100%;
+}
+</style>
