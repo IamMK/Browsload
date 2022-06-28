@@ -2,15 +2,15 @@
   <base-dialog>
     <h3>Pobieranie w toku</h3>
     <section class="dialog__timing">
-      <p class="dialog__paragraph">{{ progress.percent }}%</p>
-      <p class="dialog__paragraph">{{ progress.speed }}kbps</p>
+      <p class="dialog__paragraph">{{ appStore.progress.percent }}%</p>
+      <p class="dialog__paragraph">{{ appStore.progress.speed }}kbps</p>
       <p class="dialog__paragraph">
-        {{ progress.remaining.minutes }} minutes
-        {{ progress.remaining.seconds }} seconds
+        {{ appStore.progress.remaining.minutes }} minutes
+        {{ appStore.progress.remaining.seconds }} seconds
       </p>
     </section>
     <progress
-      :value="progress.percent"
+      :value="appStore.progress.percent"
       max="100"
       class="dialog_progressbar"
     ></progress>
@@ -24,7 +24,7 @@ export default {
     const appStore = useAppStore();
 
     return {
-      progress: appStore.progress,
+      appStore,
     };
   },
 };
