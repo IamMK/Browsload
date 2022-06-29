@@ -18,7 +18,7 @@ const buttonClass = computed(() => {
 
 <template>
   <button :class="buttonClass">
-    <slot></slot>
+    <slot />
   </button>
 </template>
 

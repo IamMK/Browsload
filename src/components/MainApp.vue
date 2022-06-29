@@ -12,9 +12,7 @@ const { error, downloadStatus } = storeToRefs(useAppStore());
   <main class="main">
     <h2 class="main__title">Wyszukaj Zlecenie</h2>
     <h3 v-if="error" class="form__error">Nieprawidłowy numer zlecenia</h3>
-    <the-progress
-      v-if="downloadStatus != 404 && downloadStatus != 0"
-    ></the-progress>
+    <the-progress v-if="downloadStatus != 404 && downloadStatus != 0" />
     <the-form />
   </main>
 </template>

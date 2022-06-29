@@ -2,8 +2,6 @@
 import { useAppStore } from "@/store";
 import { storeToRefs } from "pinia";
 
-const appStore = useAppStore();
-
 const { progress } = storeToRefs(useAppStore());
 </script>
 
@@ -18,11 +16,7 @@ const { progress } = storeToRefs(useAppStore());
         {{ progress.remaining.seconds }} seconds
       </p>
     </section>
-    <progress
-      :value="appStore.progress.percent"
-      max="100"
-      class="dialog__progressBar"
-    ></progress>
+    <progress :value="progress.percent" max="100" class="dialog__progressBar" />
   </base-dialog>
 </template>
 

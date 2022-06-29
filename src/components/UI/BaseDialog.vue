@@ -1,6 +1,6 @@
 <template>
   <section class="dialog">
-    <slot></slot>
+    <slot />
   </section>
 </template>
 
