@@ -2,71 +2,70 @@
 import { useAppStore } from "@/store";
 
 import BaseButton from "@/components/UI/BaseButton.vue";
+import axios from "axios";
 
 const appStore = useAppStore();
 
-async function downloadItem(url: string, label: string) {
+const downloadItem = async (url: string, label: string) => {
   const startTime = new Date().getTime();
 
-  const request = new XMLHttpRequest();
+  axios
+    .get(url, {
+      responseType: "blob",
+      onDownloadProgress: (progress) => {
+        appStore.downloadStatus = 200;
 
-  request.responseType = "blob";
-  request.open("get", url, true);
-  request.send();
+        const percentComplete = Math.round(
+          (progress.loaded / progress.total) * 100
+        );
 
-  request.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-      appStore.downloadStatus = 200;
-      const imageURL = window.URL.createObjectURL(this.response);
+        const duration = (new Date().getTime() - startTime) / 1000;
+        const bps = progress.loaded / duration;
+        const kbps = Math.floor(bps / 1024);
+
+        const time = (progress.total - progress.loaded) / bps;
+        const seconds = Math.floor(time % 60);
+        const minutes = Math.floor(time / 60);
+
+        appStore.progress = {
+          percent: percentComplete,
+          speed: kbps,
+          remaining: {
+            minutes,
+            seconds,
+          },
+        };
+      },
+    })
+    .then((response) => {
+      appStore.downloadStatus = response.status;
+      const imageURL = window.URL.createObjectURL(response.data);
       const anchor = document.createElement("a");
       anchor.href = imageURL;
       anchor.download = label;
       document.body.appendChild(anchor);
       anchor.click();
-    } else if (this.status == 404) {
-      appStore.downloadStatus = 404;
+    })
+    .catch((error) => {
+      appStore.downloadStatus = error.response.status;
       appStore.error = true;
-    }
-  };
-
-  request.onprogress = function (e) {
-    if (this.status != 404) {
-      appStore.downloadStatus = 200;
-      const percentComplete = Math.floor((e.loaded / e.total) * 100);
-
-      const duration = (new Date().getTime() - startTime) / 1000;
-      const bps = e.loaded / duration;
-
-      const kbps = Math.floor(bps / 1024);
-
-      const time = (e.total - e.loaded) / bps;
-      const seconds = Math.floor(time % 60);
-      const minutes = Math.floor(time / 60);
-
-      appStore.progress = {
-        percent: percentComplete,
-        speed: kbps,
-        remaining: {
-          minutes,
-          seconds,
-        },
-      };
-    }
-  };
-}
+    });
+};
 
 function clearErrors() {
   appStore.error = false;
 }
 
 function isLetter(e: KeyboardEvent) {
-  const keyCode = e.code;
+  const keyCode = e.which;
 
-  if (keyCode === "46") {
+  console.log(e);
+
+  if (keyCode === 46) {
     return true;
   }
 
-  if (keyCode !== "8" && (keyCode < "48" || keyCode > "57")) {
+  if (keyCode !== 8 && (keyCode < 48 || keyCode > 57)) {
     e.preventDefault();
   }
 }
