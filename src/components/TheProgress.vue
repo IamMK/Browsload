@@ -1,12 +1,21 @@
+<script setup lang="ts">
+import { useAppStore } from "@/store";
+import { storeToRefs } from "pinia";
+
+const appStore = useAppStore();
+
+const { progress } = storeToRefs(useAppStore());
+</script>
+
 <template>
   <base-dialog>
     <h3>Pobieranie w toku</h3>
     <section class="dialog__timing">
-      <p class="dialog__paragraph">{{ appStore.progress.percent }}%</p>
-      <p class="dialog__paragraph">{{ appStore.progress.speed }}kbps</p>
+      <p class="dialog__paragraph">{{ progress.percent }}%</p>
+      <p class="dialog__paragraph">{{ progress.speed }}kbps</p>
       <p class="dialog__paragraph">
-        {{ appStore.progress.remaining.minutes }} minutes
-        {{ appStore.progress.remaining.seconds }} seconds
+        {{ progress.remaining.minutes }} minutes
+        {{ progress.remaining.seconds }} seconds
       </p>
     </section>
     <progress
@@ -16,19 +25,6 @@
     ></progress>
   </base-dialog>
 </template>
-
-<script>
-import { useAppStore } from "@/store";
-export default {
-  setup() {
-    const appStore = useAppStore();
-
-    return {
-      appStore,
-    };
-  },
-};
-</script>
 
 <style lang="scss">
 .dialog__progressBar {

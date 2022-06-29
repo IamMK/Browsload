@@ -1,23 +1,14 @@
+<script setup lang="ts">
+import TheHeader from "@/components/TheHeader.vue";
+import MainApp from "@/components/MainApp.vue";
+import TheFooter from "@/components/TheFooter.vue";
+</script>
+
 <template>
   <the-header></the-header>
   <main-app></main-app>
   <the-footer></the-footer>
 </template>
-
-<script>
-import TheHeader from "@/components/TheHeader.vue";
-import MainApp from "@/components/MainApp.vue";
-import TheFooter from "@/components/TheFooter.vue";
-
-export default {
-  name: "App",
-  components: {
-    TheHeader,
-    MainApp,
-    TheFooter,
-  },
-};
-</script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
