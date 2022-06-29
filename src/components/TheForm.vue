@@ -60,13 +60,13 @@ function clearErrors() {
 }
 
 function isLetter(e: KeyboardEvent) {
-  const keyCode = e.keyCode;
+  const keyCode = e.code;
 
-  if (keyCode === 46) {
+  if (keyCode === "46") {
     return true;
   }
 
-  if (keyCode !== 8 && (keyCode < 48 || keyCode > 57)) {
+  if (keyCode !== "8" && (keyCode < "48" || keyCode > "57")) {
     e.preventDefault();
   }
 }
