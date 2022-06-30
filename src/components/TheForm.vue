@@ -62,14 +62,7 @@ function isLetter(e: KeyboardEvent) {
 
   const acceptable = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
-  if (acceptable.find((el) => el === keyCode)) {
-    console.log("dupa");
-
-    return true;
-  } else {
-    console.log("cipa");
-    e.preventDefault();
-  }
+  if (!acceptable.find((el) => el === keyCode)) e.preventDefault();
 }
 
 const { url, label, orderNo } = storeToRefs(appStore);
