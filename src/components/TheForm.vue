@@ -3,6 +3,7 @@ import { useAppStore } from "@/store";
 
 import BaseButton from "@/components/UI/BaseButton.vue";
 import axios from "axios";
+import { storeToRefs } from "pinia";
 
 const appStore = useAppStore();
 
@@ -69,6 +70,8 @@ function isLetter(e: KeyboardEvent) {
     e.preventDefault();
   }
 }
+
+const { url, label, orderNo } = storeToRefs(appStore);
 </script>
 
 <template>
@@ -78,16 +81,16 @@ function isLetter(e: KeyboardEvent) {
         class="form__input"
         type="text"
         @keypress="isLetter($event)"
-        v-model="appStore.orderNo"
+        v-model="orderNo"
         @click="clearErrors"
         @keyup="clearErrors"
-        @keyup.enter="downloadItem(appStore.url, appStore.label)"
+        @keyup.enter="downloadItem(url, label)"
       />
     </div>
     <base-button
       type="submit"
       parent="form"
-      @click.prevent="downloadItem(appStore.url, appStore.label)"
+      @click.prevent="downloadItem(url, label)"
     >
       Pobierz
     </base-button>
