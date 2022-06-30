@@ -58,15 +58,16 @@ function clearErrors() {
 }
 
 function isLetter(e: KeyboardEvent) {
-  const keyCode = e.which;
+  const keyCode = e.key;
 
-  console.log(e);
+  const acceptable = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
-  if (keyCode === 46) {
+  if (acceptable.find((el) => el === keyCode)) {
+    console.log("dupa");
+
     return true;
-  }
-
-  if (keyCode !== 8 && (keyCode < 48 || keyCode > 57)) {
+  } else {
+    console.log("cipa");
     e.preventDefault();
   }
 }
