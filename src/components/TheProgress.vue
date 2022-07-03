@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAppStore } from "@/store";
 import { storeToRefs } from "pinia";
+import BaseDialog from "@/components/UI/BaseDialog.vue";
 
 const { progress } = storeToRefs(useAppStore());
 </script>
